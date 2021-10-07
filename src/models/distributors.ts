@@ -1,5 +1,6 @@
 import { Id, RelationMappings} from 'objection';
 import Base from './base';
+import { Channel_authorization } from './channel-authorization';
 import { Products } from './products';
 
 
@@ -22,6 +23,14 @@ static get relationMappings(): RelationMappings {
         join:{
             from:'distributors.id',
             to:'products.idDistributors'
+        }
+    },
+    idChannels:{
+        relation: Base.HasManyRelation,
+        modelClass: Channel_authorization,
+        join:{
+            from:'distributors.id',
+            to:'channel-authorizations.idDistributors'
         }
     }
 }
