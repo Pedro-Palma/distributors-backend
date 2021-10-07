@@ -1,6 +1,7 @@
 import { Id, RelationMappings} from 'objection';
 import Base from './base';
 import { Channel_authorization } from './channel-authorization';
+import{Process_Schedules} from './process-schedules'
 import { Products } from './products';
 
 
@@ -31,6 +32,14 @@ static get relationMappings(): RelationMappings {
         join:{
             from:'distributors.id',
             to:'channel-authorizations.idDistributors'
+        }
+    },
+    idProcessSchedules:{
+        relation: Base.HasManyRelation,
+        modelClass: Process_Schedules,
+        join:{
+            from:'distributors.id',
+            to:'process-schedules.idDistributors'
         }
     }
 }

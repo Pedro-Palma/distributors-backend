@@ -2,12 +2,10 @@ import { Id, RelationMappings } from "objection";
 import { Distributors } from "./distributors";
 import Base from "./base";
 
-export class Products extends Base {
+export class Process_Schedules extends Base {
   id!: Id;
-  name!: string;
-  code!: string;
-  description!: string;
-  amount!: number;
+  startTime!: Date;
+  finishTime!: Date;
   idDistributor?: Id;
   distributor!: Distributors;
 
@@ -17,7 +15,7 @@ export class Products extends Base {
               relation: Base.BelongsToOneRelation,
               modelClass: Distributors,
               join:{
-                  from: 'products.idDistributor',
+                  from: 'process-schedules.idDistributor',
                   to:'distributors.id'
               }
           }
@@ -28,8 +26,8 @@ export class Products extends Base {
 
 
   static get tableName() {
-    return "products";
+    return "process-schedules";
   }
 }
 
-export default Products;
+export default Process_Schedules;
