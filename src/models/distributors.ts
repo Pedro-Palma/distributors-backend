@@ -1,5 +1,6 @@
-import { Id} from 'objection';
+import { Id, RelationMappings} from 'objection';
 import Base from './base';
+import { Products } from './products';
 
 
 export class Distributors extends Base {
@@ -10,9 +11,21 @@ emailNotification! : string;
 emailAlert! : string; 
 
 static get tableName(){
-    return'distributors';}
+    return 'distributors';
+}
 
-
+static get relationMappings(): RelationMappings {
+    return {
+    idProducts:{
+        relation: Base.HasManyRelation,
+        modelClass: Products,
+        join:{
+            from:'distributors.id',
+            to:'products.idDistributors'
+        }
+    }
+}
+}
 
 }
 
