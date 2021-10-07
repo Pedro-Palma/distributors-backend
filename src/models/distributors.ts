@@ -3,6 +3,7 @@ import Base from './base';
 import { Channel_authorization } from './channel-authorization';
 import{Process_Schedules} from './process-schedules'
 import { Products } from './products';
+import {Users} from './users';
 
 
 export class Distributors extends Base {
@@ -40,6 +41,14 @@ static get relationMappings(): RelationMappings {
         join:{
             from:'distributors.id',
             to:'process-schedules.idDistributors'
+        }
+    },
+    idUsers:{
+        relation: Base.HasManyRelation,
+        modelClass: Users,
+        join:{
+            from:'distributors.id',
+            to:'users.idDistributors'
         }
     }
 }
