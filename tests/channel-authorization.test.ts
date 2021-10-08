@@ -4,7 +4,7 @@ import { Model } from "objection";
 import app from "../src/app";
 import knexfile from "../knexfile";
 
-describe("Products test", () => {
+describe("Channel-authorization test", () => {
   let knex: any;
   let seedDistributors: any;
   let seedChannel: any;
