@@ -6,7 +6,7 @@ export const createChannel = async (req: Request, res: Response) => {
     const params = req.body;
     if (!params.name || !params.code || !params.idDistributor)
       return res
-        .status(500)
+        .status(400)
         .json({ message: "Enter the resqueted parameters" });
 
         const channel = await Channel_authorization.query().insert({
@@ -15,7 +15,7 @@ export const createChannel = async (req: Request, res: Response) => {
             idDistributor: params.idDistributor
         })
 
-        return res.status(200).json({channel})
+        return res.status(201).json({channel})
   } catch (err) {
       return res.status(500).json(err)
   }
@@ -49,9 +49,9 @@ try{
 export const deleteChannel = async (req: Request, res: Response) =>{
     try{
         const params = req.params;
-    if(!params.id) return res.status(500).json({message:"Enter the requested parameters"})
+    if(!params.id) return res.status(400).json({message:"Enter the requested parameters"})
     const channel = await Channel_authorization.query().deleteById(params.id)
-    if(!channel) return res.status(500).json({message:"No existing channel with that Id"})
+    if(!channel) return res.status(400).json({message:"No existing channel with that Id"})
     return res.status(200).json({channel})
     }catch (err) {
     return res.status(500).json(err)    
@@ -62,13 +62,13 @@ export const updateChannel = async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const params = req.body;
-        if(!id) return res.status(500).json({message:"Enter the requested parameters"})
+        if(!id) return res.status(400).json({message:"Enter the requested parameters"})
         const channel = await Channel_authorization.query().findById(id).patch({
             name: params.name,
             code: params.code,
             idDistributor: params.idDistributor
         })
-        if(!channel) return res.status(500).json({message:"No existing channel with that Id"})
+        if(!channel) return res.status(400).json({message:"No existing channel with that Id"})
 
         return res.status(200).json({channel})
     }catch (err) {
