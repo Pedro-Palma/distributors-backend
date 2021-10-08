@@ -22,7 +22,7 @@ export const createProduct = async (req: Request, res: Response) => {
           amount: params.amount,
           idDistributor: params.idDistributor
       });
-      return res.status(200).json({product})
+      return res.status(201).json({product})
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -54,9 +54,9 @@ export const getProducts = async(req: Request, res: Response) => {
 export const deleteProduct = async(req: Request, res: Response) => {
   try{
     const params = req.params;
-    if(!params.id) return res.status(500).json({message:"Enter the requested parameters"})
+    if(!params.id) return res.status(400).json({message:"Enter the requested parameters"})
     const product = await Products.query().deleteById(params.id)
-    if(!product) return res.status(500).json({message:"No existing product with that Id"})
+    if(!product) return res.status(400).json({message:"No existing product with that Id"})
     return res.status(200).json({product})
   }catch(err){
     return res.status(500).json(err)
@@ -75,7 +75,7 @@ export const updateProduct = async (req: Request, res: Response) => {
             amount: params.amount,
             idDistributor: params.idDistributor
         })
-        if(!product) return res.status(500).json({message:"No existing product with that Id"})
+        if(!product) return res.status(400).json({message:"No existing product with that Id"})
 
         return res.status(200).json({product})
   }catch(err) {
