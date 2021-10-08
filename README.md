@@ -34,7 +34,7 @@ Run the app.
 npm run dev
 ```
 
-Run the tests.
+Run the testss.
 ```shell script
 npm test
 ```
