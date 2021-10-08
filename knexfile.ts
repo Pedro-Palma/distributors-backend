@@ -1,7 +1,7 @@
 import * as path from 'path';
 
 
-const knexFile = {
+const development = {
   
   client: 'postgresql',
   useNullAsDefault: true,
@@ -11,7 +11,7 @@ const knexFile = {
     password: 'root'
   },
   pool: {
-    min: 2,
+    min: 0,
     max: 10
   },
   migrations: {
@@ -23,10 +23,29 @@ const knexFile = {
   
 }
 
-
+const test = {
+  
+  client: 'postgresql',
+  useNullAsDefault: true,
+  connection: {
+    host:'127.0.0.1',
+    user:     'postgres',
+    password: 'root'
+  },
+  pool: {
+    min: 0,
+    max: 10
+  },
+  migrations: {
+    tableName: 'knex_migrations',
+    directory: path.resolve('./knex/migrations'),
+    extension: '.ts',
+    loadExtensions: ['.ts'],
+  },
+  
+}
 
 export default {
-development:{
-  ...knexFile
-}
+  test, 
+  development, 
 }

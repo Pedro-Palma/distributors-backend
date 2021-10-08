@@ -4,9 +4,9 @@ import * as ChannelController from "../controllers/channel-authorization"
 const router = Router();
 
 router
-.post('/CreateChannelAuthorization',ChannelController.createChannel)
-.get('/getChannelAuthorizations',ChannelController.getChannels)
-.get('/getChannelAuthorizationId/:id',ChannelController.getChannelId)
-.delete('/deleteChannelAuthorization/:id',ChannelController.deleteChannel)
-.put('/updateChannelAuthorization/:id',ChannelController.updateChannel)
+.post('/channel',ChannelController.createChannel)
+.get('/channel',ChannelController.getChannels)
+.get('/channel/:id',ChannelController.getChannelId)
+.delete('/channel/:id',ChannelController.deleteChannel)
+.put('/channel/:id',ChannelController.updateChannel)
 export default router;
