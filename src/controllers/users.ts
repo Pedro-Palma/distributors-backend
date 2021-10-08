@@ -1,14 +1,17 @@
 import Users from "../models/users";
 import { Request, Response } from "express";
+import { userSchema, userSchemaId } from "../schemas/user";
 
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const params = req.body;
-    if (!params.name || !params.email || !params.idDistributor|| !params.code || !params.phoneNumber)
+    const { error, value } = userSchema.validate(req.body);
+
+    
+    if (error)
       return res
         .status(400)
         .json({ message: "Enter the resquested parameters" });
-
+        const params = req.body;
     const user = await Users.query().insert({
       name: params.name,
       phoneNumber: params.phoneNumber,
@@ -25,8 +28,10 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const getUserId = async (req: Request, res: Response) =>{
     try {
+      const { error, value } = userSchemaId.validate(req.params);
+      if(error) return res.status(500).json({message:"Enter the requested parameters"})
+
       const params = req.params;
-      if(!params.id) return res.status(500).json({message:"Enter the requested parameters"})
       const user = await Users.query().findById(params.id)
       if(!user) return res.status(400).json({message:"No existing users   with that Id"})
       return res.status(200).json({user})
@@ -47,8 +52,10 @@ export const getUsers = async (req: Request, res: Response)=>{
 
   export const deleteUser = async (req: Request, res: Response) =>{
     try{
+      const { error, value } = userSchemaId.validate(req.params);
+      if(error) return res.status(400).json({message:"Enter the requested parameters"})
+
         const params = req.params;
-    if(!params.id) return res.status(400).json({message:"Enter the requested parameters"})
     const user = await Users.query().deleteById(params.id)
     if(!user) return res.status(400).json({message:"No existing users with that Id"})
     return res.status(200).json({user})
@@ -59,9 +66,10 @@ export const getUsers = async (req: Request, res: Response)=>{
 
 export const updateUser = async (req: Request, res: Response) => {
     try {
+      const { error, value } = userSchemaId.validate(req.params);
+      if(error) return res.status(400).json({message:"Enter the requested parameters"})
         const id = req.params.id;
         const params = req.body;
-        if(!id) return res.status(400).json({message:"Enter the requested parameters"})
         const user = await Users.query().findById(id).patch({
             name: params.name,
             phoneNumber: params.phoneNumber,
