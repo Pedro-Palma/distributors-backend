@@ -4,10 +4,10 @@ import { Model } from "objection";
 import app from "../src/app";
 import knexfile from "../knexfile";
 
-describe("Products test", () => {
+describe("Users test", () => {
   let knex: any;
   let seedDistributors: any;
-  let seedProducts: any;
+  let seedUsers: any;
 
   beforeAll(async () => {
     const env = process.env.ENV || "development";
@@ -29,13 +29,13 @@ describe("Products test", () => {
         },
       ])
       .returning("*");
-    seedProducts = await knex("products")
+      seedUsers = await knex("users")
       .insert([
         {
-          name: "Product 1",
+          name: "User 1",
           code: "9999",
-          amount: 5,
-          description: "description poduct 1",
+          email: "email@gmail.com",
+          phoneNumber: "+502 5555-5555",
           idDistributor: seedDistributors[0].id,
         },
       ])
@@ -45,77 +45,77 @@ describe("Products test", () => {
     await knex.destroy();
   });
   describe("all success", () => {
-    it("get alls products", async () => {
-      const response = await request(app).get(`/api/product`).expect(200);
-      expect(response.body.product.length).toBe(1);
+    it("get alls users", async () => {
+      const response = await request(app).get(`/api/user`).expect(200);
+      expect(response.body.user.length).toBe(1);
     });
-    it("get one product", async () => {
+    it("get one user", async () => {
       const response = await request(app)
-        .get(`/api/product/${seedProducts[0].id}`)
+        .get(`/api/user/${seedUsers[0].id}`)
         .expect(200);
-      expect(response.body.product.name).toBe("Product 1");
+      expect(response.body.user.name).toBe("User 1");
     });
-    it("update product", async () => {
+    it("update user", async () => {
       const response = await request(app)
-        .put(`/api/product/${seedProducts[0].id}`)
+        .put(`/api/user/${seedUsers[0].id}`)
         .send({
-          name: "Product update",
+          name: "User update",
           code: "000",
-          amount: 15,
-          description: "description poduct 1 update",
+          email: "email@gmail.com",
+          phoneNumber: "+502 0000-0000",
           idDistributor: seedDistributors[0].id,
         })
         .expect(200);
-      expect(response.body.product).toBeTruthy();
+      expect(response.body.user).toBeTruthy();
     });
-    it("delete product", async () => {
+    it("delete user", async () => {
       const response = await request(app)
-        .delete(`/api/product/${seedProducts[0].id}`)
+        .delete(`/api/user/${seedUsers[0].id}`)
         .expect(200);
-      expect(response.body.product).toBeTruthy();
+      expect(response.body.user).toBeTruthy();
     });
-    it("create product", async () => {
+    it("create user", async () => {
         const response = await request(app)
-          .post(`/api/product`)
+          .post(`/api/user`)
           .send({
-          name: "Product test",
+          name: "User test",
           code: "000",
-          amount: 15,
-          description: "description poduct 1 test",
+          phoneNumber: "+502 1111-1111",
+          email: "test@gmail.com",
           idDistributor: seedDistributors[0].id,
           })
           .expect(201);
-        expect(response.body.product.name).toBe("Product test");
+        expect(response.body.user.name).toBe("User test");
       });
 
   });
   describe("all failed", () => {
-    it("update product", async () => {
+    it("update user", async () => {
       const response = await request(app)
-        .put(`/api/product/8`)
+        .put(`/api/user/8`)
         .send({
-          name: "Product update",
+          name: "User update",
           code: "000",
-          amount: 15,
-          description: "description poduct 1 update",
+          phoneNumber: "+502 2222-2222",
+          email: "email@gmail.com",
           idDistributor: seedDistributors[0].id,
         })
         .expect(400);
-      expect(response.body.message).toBe("No existing product with that Id");
+      expect(response.body.message).toBe("No existing users with that Id");
     });
-    it("delete product", async () => {
+    it("delete user", async () => {
       const response = await request(app)
-        .delete(`/api/product/8`)
+        .delete(`/api/user/8`)
         .expect(400);
-      expect(response.body.message).toBe("No existing product with that Id");
+      expect(response.body.message).toBe("No existing users with that Id");
     });
-    it("create product", async () => {
+    it("create user", async () => {
         const response = await request(app)
-          .post(`/api/product`)
+          .post(`/api/user`)
           .send({
           code: "000",
-          amount: 15,
-          description: "description poduct 1 test",
+          phoneNumber: "+502 2222-2222",
+          email: "email@gmail.com",
           idDistributor: seedDistributors[0].id,
           })
           .expect(400);

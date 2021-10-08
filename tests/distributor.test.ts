@@ -35,7 +35,7 @@ describe("Distributor test", () => {
   describe("all success", () => {
     it("get alls distributors", async () => {
       const response = await request(app).get(`/api/distributor`).expect(200);
-      expect(response.body.distributor.length).toBe(1);
+      expect(response.body.distributor.length).toBe(3);
     });
     it("create distributor", async () => {
       const response = await request(app)
