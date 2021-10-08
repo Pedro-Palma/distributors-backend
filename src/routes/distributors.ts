@@ -9,7 +9,6 @@ router
 .get('/distributor',distributorsController.getDistributors)
 .delete('/distributor/:id',distributorsController.deleteDistributor)
 .put('/distributor/:id',distributorsController.updateDistributor)
-.post('/distributor/all',distributorsController.createDistributorComplete)
 
 export default router;
 
