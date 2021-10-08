@@ -10,7 +10,7 @@ export const createProcessSchedules = async (req: Request, res: Response) => {
         !params.idDistributor
       )
         return res
-          .status(500)
+          .status(400)
           .json({ message: "Enter the resquested parameters" });
   
       const process = await Process_Schedules.query().insert({
@@ -18,7 +18,7 @@ export const createProcessSchedules = async (req: Request, res: Response) => {
           finishTime: params.finishTime,
           idDistributor: params.idDistributor
       });
-      return res.status(200).json({process})
+      return res.status(201).json({process})
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -50,9 +50,9 @@ export const createProcessSchedules = async (req: Request, res: Response) => {
     export const deleteProcessSchedules = async (req: Request, res: Response) =>{
         try{
             const params = req.params;
-        if(!params.id) return res.status(500).json({message:"Enter the requested parameters"})
+        if(!params.id) return res.status(400).json({message:"Enter the requested parameters"})
         const process = await Process_Schedules.query().deleteById(params.id)
-        if(!process) return res.status(500).json({message:"No existing process schedules with that Id"})
+        if(!process) return res.status(400).json({message:"No existing process schedules with that Id"})
         return res.status(200).json({process})
         }catch (err) {
         return res.status(500).json(err)    
@@ -63,13 +63,13 @@ export const createProcessSchedules = async (req: Request, res: Response) => {
         try {
             const id = req.params.id;
             const params = req.body;
-            if(!id) return res.status(500).json({message:"Enter the requested parameters"})
+            if(!id) return res.status(400).json({message:"Enter the requested parameters"})
             const process = await Process_Schedules.query().findById(id).patch({
                 startTime: params.startTime,
                 finishTime: params.finishTime,
                 idDistributor: params.idDistributor
             })
-            if(!process) return res.status(500).json({message:"No existing process schedules with that Id"})
+            if(!process) return res.status(400).json({message:"No existing process schedules with that Id"})
     
             return res.status(200).json({process})
         }catch (err) {
