@@ -4,11 +4,12 @@ import * as distributorsController from "../controllers/distributors"
 const router = Router();
 
 router
-.post('/createDistributor',distributorsController.createDistributor)
-.get('/getDistributorId/:id',distributorsController.getDistributorId)
-.get('/getDistributors',distributorsController.getDistributors)
-.delete('/deleteDistributor/:id',distributorsController.deleteDistributor)
-.put('/updateDistributor/:id',distributorsController.updateDistributor)
+.post('/distributor',distributorsController.createDistributor)
+.get('/distributor/:id',distributorsController.getDistributorId)
+.get('/distributor',distributorsController.getDistributors)
+.delete('/distributor/:id',distributorsController.deleteDistributor)
+.put('/distributor/:id',distributorsController.updateDistributor)
+.post('/distributor/all',distributorsController.createDistributorComplete)
 
 export default router;
 
